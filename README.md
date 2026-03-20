@@ -247,3 +247,96 @@ uv sync
 ├── cli.py                 # CLI entry point
 ├── main.py                # Main application entry point
 └── pyproject.toml         # Project metadata and dependencies
+# Analyze a single stock
+uv run cli.py AAPL
+
+# Analyze multiple stocks
+uv run cli.py AAPL GOOGL MSFT
+
+# Use a custom time period
+uv run cli.py AAPL --days 90
+
+# JSON output
+uv run cli.py AAPL --format json
+
+# Save analysis to file
+uv run cli.py AAPL --output analysis.json
+
+# Watch mode
+uv run cli.py AAPL --watch --interval 300
+
+# Analyze from a watchlist
+uv run cli.py --watchlist examples/watchlist.txt
+
+# Summary-only mode
+uv run cli.py AAPL GOOGL --summary-only
+#verbosity levels
+# Silent
+uv run cli.py AAPL --verbose=0
+
+# Default
+uv run cli.py AAPL --verbose=1
+
+# Detailed
+uv run cli.py AAPL --verbose=2
+
+# Debug with file logging
+uv run cli.py AAPL --verbose=3 --log debug.log
+
+# Quiet alias
+uv run cli.py AAPL --quiet
+#cache configuration
+# Disable Redis
+ENABLE_REDIS=false uv run cli.py AAPL
+
+# Start Redis with Docker
+docker run -d -p 6379:6379 redis:7-alpine
+
+# Or with Docker Compose
+docker-compose up redis
+#fastapi server
+uv run main.py
+#using UV directly
+uv run uvicorn src.api.app:app --reload
+#expected output 
+INFO:     Started server process [12345]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+#head to http://127.0.0.1:8000/docs
+#example API request curl "http://127.0.0.1:8000/api/v1/signals/AAPL?days=30"
+#example response
+{
+  "symbol": "AAPL",
+  "analysis_period": {
+    "start_date": "2023-01-01T00:00:00",
+    "end_date": "2023-01-31T00:00:00",
+    "days": 30
+  },
+  "final_decision": {
+    "signal": "BUY",
+    "confidence": 0.75,
+    "reasoning": "Technical indicators show bullish momentum with strong support at current levels.",
+    "timestamp": "2023-01-31T12:00:00"
+  },
+  "agent_decisions": {
+    "technical": {
+      "signal": "BUY",
+      "confidence": 0.80,
+      "reasoning": "Price is above key moving averages with positive momentum.",
+      "timestamp": "2023-01-31T12:00:00"
+    },
+    "sentiment": {
+      "signal": "HOLD",
+      "confidence": 0.60,
+      "reasoning": "News sentiment is mixed with neutral bias.",
+      "timestamp": "2023-01-31T12:00:00"
+    },
+    "risk": {
+      "signal": "BUY",
+      "confidence": 0.70,
+      "reasoning": "Risk-reward profile is acceptable under current volatility.",
+      "timestamp": "2023-01-31T12:00:00"
+    }
+  }
+}
