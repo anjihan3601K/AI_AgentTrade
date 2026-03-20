@@ -202,3 +202,48 @@ Follow these steps to run the project locally for development and testing.
 ```sh
 git clone https://github.com/your-username/ai-trading-system.git
 cd ai-trading-system
+uv venv
+source .venv/bin/activate
+# On Windows:
+.venv\Scripts\activate
+uv sync
+
+```markdown
+## 📂 Project Structure
+
+```text
+├── .github/               # GitHub Actions and CI/CD workflows
+├── data/                  # Logs, cache, and backtest outputs
+├── docs/                  # Project documentation
+│   └── testing/           # Testing documentation
+├── examples/              # Example scripts
+├── notebooks/             # Jupyter notebooks and experiments
+├── performance_charts/    # Performance visualization assets
+├── scripts/               # Utility and helper scripts
+├── src/                   # Main source code
+│   ├── agents/            # Specialized AI agents
+│   ├── analysis/          # Market analysis logic
+│   ├── api/               # FastAPI application
+│   ├── backtesting/       # Backtesting components
+│   ├── cli/               # CLI components
+│   ├── communication/     # Message bus and orchestration
+│   ├── config/            # Configuration and settings
+│   ├── data/              # Data providers and pipelines
+│   ├── llm/               # LLM integrations
+│   ├── migration/         # Migration utilities
+│   ├── signal_generation/ # Local signal generation framework
+│   ├── strategies/        # Trading strategies
+│   └── utils/             # Utilities and helpers
+├── tests/                 # Comprehensive test suite
+│   ├── unit/
+│   ├── integration/
+│   ├── e2e/
+│   ├── performance/
+│   ├── validation/
+│   ├── comparison/
+│   ├── fixtures/
+│   ├── conftest.py
+│   └── run_all_tests.py
+├── cli.py                 # CLI entry point
+├── main.py                # Main application entry point
+└── pyproject.toml         # Project metadata and dependencies
